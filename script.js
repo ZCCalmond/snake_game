@@ -24,7 +24,7 @@ function init() {
   this.dir = "right";
   this.left = false;
   this.right = false;
-  this.top = true;
+  this.up = true;
   this.down = true;
   this.grade = 0;
   this.key = true;
@@ -67,16 +67,19 @@ function snake() {
   }
 }
 function move() {
-  //   // 如果头部撞到自己的身体，游戏结束
-  //   if (
-  //     this.snakeBody.some(
-  //       (item, index) =>
-  //         index > 0 && item[0] == this.snakeBody[0][0] && this.snakeBody[0][1]
-  //     )
-  //   ) {
-  //     this.reloadGame();
-  //     console.log(22);
-  //   }
+  // 如果头部撞到自己的身体，游戏结束
+  if (
+    this.snakeBody.some(
+      (item, index) =>
+        this.snakeBody.length > 4 &&
+        index > 0 &&
+        item[0] === this.snakeBody[0][0] &&
+        item[1] === this.snakeBody[0][1]
+    )
+  ) {
+    this.reloadGame();
+    console.log(33);
+  }
 
   for (var i = this.snakeBody.length - 1; i > 0; i--) {
     this.snakeBody[i][0] = this.snakeBody[i - 1][0];
@@ -89,7 +92,7 @@ function move() {
     case "left":
       this.snakeBody[0][0] -= 1;
       break;
-    case "top":
+    case "up":
       this.snakeBody[0][1] -= 1;
       break;
     case "down":
@@ -99,7 +102,7 @@ function move() {
       break;
   }
 
-  removeClass("snake"); // 每次移动的本质是把之前旧蛇头删去，然后再重新根据数组生成新的蛇元素
+  removeClass("snake"); // 每次移动的本质是把之前旧蛇尾巴删去，然后再重新根据数组生成新的蛇元素
   snake();
   if (
     this.snakeBody[0][0] == this.foodX &&
@@ -115,7 +118,7 @@ function move() {
       case "left":
         this.snakeBody.push([this.endX - 1, this.endY, "snake"]);
         break;
-      case "top":
+      case "up":
         this.snakeBody.push([this.endX, this.endY - 1, "snake"]);
         break;
       case "down":
@@ -151,16 +154,16 @@ function setDirect(code) {
         this.dir = "left";
         this.left = false;
         this.right = false;
-        this.top = true;
+        this.up = true;
         this.down = true;
       }
       break;
     case 38:
-      if (this.top) {
-        this.dir = "top";
+      if (this.up) {
+        this.dir = "up";
         this.left = true;
         this.right = true;
-        this.top = false;
+        this.up = false;
         this.down = false;
       }
       break;
@@ -169,7 +172,7 @@ function setDirect(code) {
         this.dir = "right";
         this.left = false;
         this.right = false;
-        this.top = true;
+        this.up = true;
         this.down = true;
       }
       break;
@@ -178,7 +181,7 @@ function setDirect(code) {
         this.dir = "down";
         this.left = true;
         this.right = true;
-        this.top = false;
+        this.up = false;
         this.down = false;
       }
       break;
